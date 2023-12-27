@@ -60,6 +60,17 @@
     color: gray;
 }
 .google{
+    align-items: center;
+    justify-content: center;
+    border: transparent;
     margin-right: 0px;
     background-color: rgb(247, 70, 70);
+}
+.icon{
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px;
+    padding: 0px;
+
 }

@@ -1,8 +1,10 @@
 .header{
     display: flex;
+    justify-content: space-between;
     align-items: center;
     background-color: orange;
     height: 50px;
+    padding: 0px 20px;
 
 }
 .title{
