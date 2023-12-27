@@ -1,0 +1,17 @@
+.header{
+    display: flex;
+    align-items: center;
+    background-color: orange;
+    height: 50px;
+
+}
+.title{
+    text-decoration: none;
+    color: white;
+    font-size: 30px;
+    margin-left: 15px;
+
+}
+.title:hover{
+    color: grey;
+}
