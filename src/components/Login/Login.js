@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import "./Login.css";
 function Login() {
     const [regForm, setRegForm] = useState(false);
     const [action, setAction] = useState("Login");
     const [user, setUser] = useState({});
+
+    useEffect(() => {
+        console.log(user);
+    }, [user]);
 
     function handleReg() {
         setRegForm(!regForm);
@@ -15,16 +19,16 @@ function Login() {
         }
     }
     function handleSubmit(event) {
-        const email=event.target.email.value;
-        const password=event.target.password.value;
-         var newUser={email:email,password:password};
-        if(regForm){
-            const nickname=event.target.nickname.value;
-            const hometown=event.target.hometown.value;
-            newUser={...newUser,nickname:nickname,hometown:hometown};
+        const email = event.target.email.value;
+        const password = event.target.password.value;
+        var newUser = { email: email, password: password };
+        if (regForm) {
+            const nickname = event.target.nickname.value;
+            const hometown = event.target.hometown.value;
+            newUser = { ...newUser, nickname: nickname, hometown: hometown };
         }
         setUser(newUser);
-        console.log(user);
+        event.target.reset();
         event.preventDefault();
     }
 
