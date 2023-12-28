@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 import "./Login.css";
 function Login() {
     const [regForm, setRegForm] = useState(false);
@@ -18,7 +19,7 @@ function Login() {
             setAction("Register");
         }
     }
-    function handleSubmit(event) {
+    async function handleSubmit(event) {
         const email = event.target.email.value;
         const password = event.target.password.value;
         var newUser = { email: email, password: password };
@@ -30,6 +31,12 @@ function Login() {
         setUser(newUser);
         event.target.reset();
         event.preventDefault();
+        try {
+            const response = await axios.get('http://localhost:3001/api/data');
+            console.log(response.data);
+        } catch (error) {
+            console.error(error);
+        };
     }
 
     return (

@@ -1,7 +1,7 @@
 import "./Blog.css";
-import Header from "../Header/Header";
-import Footer from "../Footer/Footer";
-import Post from "../Post/Post";
+import Header from "../Header/Header.js";
+import Footer from "../Footer/Footer.js";
+import Post from "../Post/Post.js";
 
 function Blog() {
   return (
