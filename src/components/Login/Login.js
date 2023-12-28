@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Navigate } from "react-router-dom";
 import axios from 'axios';
 import "./Login.css";
 function Login() {
@@ -7,8 +8,24 @@ function Login() {
     const [user, setUser] = useState({});
 
     useEffect(() => {
-        console.log(user);
+        const fetchData = async () => {
+            try {
+                if (Object.keys(user).length > 0) {
+                    const response = await axios.post('http://localhost:3001/user', user, {
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    });
+                    console.log(response.data); // Access the data property of the response object
+                }
+            } catch (error) {
+                console.error('Error:', error);
+            }
+        };
+        fetchData();
     }, [user]);
+
+
 
     function handleReg() {
         setRegForm(!regForm);
@@ -20,6 +37,7 @@ function Login() {
         }
     }
     async function handleSubmit(event) {
+        event.preventDefault();
         const email = event.target.email.value;
         const password = event.target.password.value;
         var newUser = { email: email, password: password };
@@ -30,15 +48,7 @@ function Login() {
         }
         setUser(newUser);
         event.target.reset();
-        event.preventDefault();
-        try {
-            const response = await axios.get('http://localhost:3001/api/data');
-            console.log(response.data);
-        } catch (error) {
-            console.error(error);
-        };
     }
-
     return (
         <div className="main">
             <form name="login" className="form" onSubmit={handleSubmit}>
@@ -64,6 +74,7 @@ function Login() {
                     </div>
                 </div>
             </form>
+            {Object.keys(user).length > 0 && (<Navigate to="/blog" replace={true} />)}
         </div>
     );
 }
