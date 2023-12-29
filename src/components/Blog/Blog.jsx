@@ -1,7 +1,7 @@
 import "./Blog.css";
-import Header from "../Header/Header.jsx";
-import Footer from "../Footer/Footer.js";
-import Post from "../Post/Post.js";
+import Header from "../Header/Header";
+import Footer from "../Footer/Footer";
+import Post from "../Post/Post";
 import { useEffect, useState } from "react";
 import axios from "axios";
 

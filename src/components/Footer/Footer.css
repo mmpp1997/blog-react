@@ -5,15 +5,15 @@ footer{
     height: 30px;
     margin: 0px;
     padding: 0px;
-    border-top: 1px solid grey;
+    background-color: #607274;
 
 }
 .about-me{
     font-size: 20px;
-    color: black;
+    color: white;
     text-decoration: none;
     white-space: nowrap;
 }
 .about-me:hover{
-    color: grey;
+    color: gainsboro;
 }
