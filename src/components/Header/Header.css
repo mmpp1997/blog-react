@@ -2,14 +2,14 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: orange;
     height: 50px;
     padding: 0px 20px;
+    border-bottom: 1px solid black;
 
 }
 .title{
     text-decoration: none;
-    color: white;
+    color: black;
     font-size: 30px;
     margin-left: 15px;
 

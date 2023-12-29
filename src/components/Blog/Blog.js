@@ -1,5 +1,5 @@
 import "./Blog.css";
-import Header from "../Header/Header.js";
+import Header from "../Header/Header.jsx";
 import Footer from "../Footer/Footer.js";
 import Post from "../Post/Post.js";
 import { useEffect, useState } from "react";
@@ -21,10 +21,6 @@ function Blog() {
     fetchPosts();
   }, []);
 
-  //show updated posts
-  useEffect(() => {
-    console.log(posts);
-  }, [posts]);
 
   return (
     <div className="grid-container">
@@ -32,7 +28,11 @@ function Blog() {
         <Header />
       </div>
       <div className="page">
-        <Post />
+        {posts.map((post) => {
+          return (
+            <Post key={post.id} post={post} />
+          );
+        })}
       </div>
       <div>
         <Footer />
