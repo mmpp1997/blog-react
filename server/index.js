@@ -51,24 +51,12 @@ passport.deserializeUser((id, done) => {
 });
 
 
-//app.use("/", getRouter);
-//app.use("/", postRouter);
-
-app.post('/user', (req, res) => {
-    const user=req.body;
-    console.log(user);
-    res.send(user);
-    //res.redirect("/blog");
-});
+app.use("/", getRouter);
+app.use("/", postRouter);
 
 // app.get('*', (req, res) => {
 //     res.sendFile(path.join(__dirname + '/public/index.html'));
 // });
-
-app.post("/login", passport.authenticate('local', {
-    successRedirect: "/blog",
-    failureRedirect: "/",
-}));
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);

@@ -6,24 +6,39 @@ function Login() {
     const [regForm, setRegForm] = useState(false);
     const [action, setAction] = useState("Login");
     const [user, setUser] = useState({});
+    const [success, setSuccess] = useState(false);
 
     useEffect(() => {
+        setSuccess(false);
         const fetchData = async () => {
             try {
                 if (Object.keys(user).length > 0) {
-                    const response = await axios.post('http://localhost:3001/user', user, {
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                    });
-                    console.log(response.data); // Access the data property of the response object
+                    var response;
+                    if (regForm) {
+                        response = await axios.post('http://localhost:3001/register', user, {
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                        });
+                    }
+                    else if (!regForm) {
+                        response = await axios.post('http://localhost:3001/login', user, {
+                            headers: {
+                                'Content-Type': 'application/json',
+                            },
+                        });
+                    }
+                    console.log(response.data);
+                    if (response.data === "Success") {
+                        setSuccess(true);
+                    }
                 }
             } catch (error) {
                 console.error('Error:', error);
             }
         };
         fetchData();
-    }, [user]);
+    }, [user,regForm]);
 
 
 
@@ -36,15 +51,16 @@ function Login() {
             setAction("Register");
         }
     }
+
     async function handleSubmit(event) {
         event.preventDefault();
-        const email = event.target.email.value;
+        const username = event.target.username.value;
         const password = event.target.password.value;
-        var newUser = { email: email, password: password };
+        var newUser = { username: username, password: password };
         if (regForm) {
             const nickname = event.target.nickname.value;
-            const hometown = event.target.hometown.value;
-            newUser = { ...newUser, nickname: nickname, hometown: hometown };
+            const location = event.target.location.value;
+            newUser = { ...newUser, nickname: nickname, location: location };
         }
         setUser(newUser);
         event.target.reset();
@@ -54,7 +70,7 @@ function Login() {
             <form name="login" className="form" onSubmit={handleSubmit}>
                 <div>
                     <div>
-                        <input name="email" className="input" type="text" title="Enter your email" placeholder="Email" required />
+                        <input name="username" className="input" type="text" title="Enter your email" placeholder="Email" required />
                     </div>
                     <div>
                         <input name="password" className="input" type="password" title="Enter your password" placeholder="Password" required />
@@ -63,7 +79,7 @@ function Login() {
                         <input name="nickname" className="input" type="text" title="Enter your nickname" placeholder="Nickname" required={regForm} />
                     </div>
                     <div style={{ display: regForm ? "inline" : "none" }}>
-                        <input name="hometown" className="input" type="text" title="Enter your hometown" placeholder="Hometown" required={regForm} />
+                        <input name="location" className="input" type="text" title="Enter your hometown" placeholder="Hometown" required={regForm} />
                     </div>
                     <div>
                         <p className="prompt">{regForm ? "Already" : "Not"} a user? <input onClick={handleReg} type="button" value={regForm ? "Login" : "Register"} /></p>
@@ -74,7 +90,7 @@ function Login() {
                     </div>
                 </div>
             </form>
-            {Object.keys(user).length > 0 && (<Navigate to="/blog" replace={true} />)}
+            {success && (<Navigate to="/blog" replace={true} />)}
         </div>
     );
 }
