@@ -1,9 +1,12 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
+
 import "./Blog.css";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import Post from "../Post/Post";
-import { useEffect, useState } from "react";
-import axios from "axios";
+import NewPost from "../NewPost/NewPost";
+
 
 function Blog() {
   const [posts, setPosts] = useState([]);
@@ -28,6 +31,7 @@ function Blog() {
         <Header />
       </div>
       <div className="page">
+        <NewPost/>
         {posts.map((post) => {
           return (
             <Post key={post.id} post={post} />

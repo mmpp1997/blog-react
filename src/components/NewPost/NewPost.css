@@ -1,0 +1,23 @@
+.add-div{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.new-post-btn{
+    margin-right: auto;
+}
+.add-btn{
+    margin: 20px;
+    border: none;
+    font-size: 28px;
+    background-color: transparent;
+    border-bottom-width: 2px;
+    border-bottom-style: solid;
+
+    color: grey;
+    border-bottom-color: grey;
+}
+.add-btn:hover{
+    color: black;
+    border-bottom-color: black;
+}
