@@ -3,74 +3,74 @@
   display: flex;
   justify-content: right;
   align-items: flex-end;
-  background-color: #ff9d00;
-  background-image: url("../../../public/images/rainbow-vortex.svg");
-  background-attachment: fixed;
-  background-size: cover;
+  background-color: #faeed1;
+  background-image: url("https://www.transparenttextures.com/patterns/60-lines.png");
 }
 .form {
   display: inline-block;
   padding: 40px;
   margin: 20px;
-  background-color: rgba(0,0,0,.5);
+  background-color: rgba(96, 114, 116, 0.7);
   border-radius: 15px;
   width: 350px;
 }
-.input{
-    margin: 4% 0px;
-    color: white;
-    border: none;
-    font-size: 25px;
-    border-bottom: 1px solid white;
+.input {
+  margin: 4% 0px;
+  color: white;
+  border: none;
+  font-size: 25px;
+  border-bottom: 1px solid white;
+  background-color: transparent;
+  width: 100%;
+  height: 10%;
+}
+.input::placeholder {
+  color: white;
+}
+.input:focus{
     background-color: transparent;
-    width: 100%;
-    height: 10%;
-}
-.input::placeholder{
-    color: white;
-}
-.prompt{
-    color: grey;
-    font-size: 20px;
-}
-.prompt>input{
-    background-color: transparent;
-    border: none;
-    color: grey;
-    font-size: 20px;
-    padding: 0px;
-    text-decoration: none;
-}
-.prompt>input:hover{
-    color: white;
-}
-.btn{
-    border: none;
-    border-radius: 10px;
-    margin-right: 10%;
-    height: 40px;
-    padding: 0px 15px;
-    font-size: 18px;
-    background-color: orange;
-    color: white;
-    
-    
-}
-.btn:hover{
-    color: gray;
-}
-.google{
-    align-items: center;
-    justify-content: center;
-    border: transparent;
-    margin-right: 0px;
-    background-color: rgb(247, 70, 70);
-}
-.icon{
-    display: inline-flex;
-    justify-content: center;
-    align-items: center;
-    margin: 0px;
-    padding: 0px;
+    outline: none;
 
+}
+.prompt {
+  color: rgb(210, 208, 208);
+  font-size: 20px;
+}
+.prompt > input {
+  background-color: transparent;
+  border: none;
+  color: rgb(210, 208, 208);
+  font-size: 20px;
+  padding: 0px;
+  text-decoration: none;
+}
+.prompt > input:hover {
+  color: white;
+}
+.btn {
+  border: none;
+  border-radius: 10px;
+  margin-right: 10%;
+  height: 40px;
+  padding: 0px 15px;
+  font-size: 18px;
+  background-color: orange;
+  color: white;
+}
+.btn:hover {
+  color: gray;
+}
+.google {
+  align-items: center;
+  justify-content: center;
+  border: transparent;
+  margin-right: 0px;
+  background-color: rgb(247, 70, 70);
+}
+.icon {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0px;
+  padding: 0px;
 }

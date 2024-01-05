@@ -44,9 +44,9 @@ function NewPostForm(props) {
     }
     return (
         <form name="newPost" className="new-post-space" onSubmit={createNewPost}>
-            <input name="title" type="text" className="new-post-title" placeholder="Enter new post title" />
+            <input name="title" type="text" className="new-post-title" placeholder="Enter new post title" required/>
             <div className="new-post-separator" />
-            <textarea name="text" className="new-post-text" placeholder="Enter new post text" />
+            <textarea name="text" className="new-post-text" placeholder="Enter new post text" required/>
             <div className="new-post-separator" />
             <div className="new-post-btns">
                 <select name="topic" className="new-post-topics" title="Topic of the post">
