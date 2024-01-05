@@ -3,7 +3,7 @@ import db from "../database/database.js";
 async function getPosts() {
   const posts = [];
   try {
-    const result = await db.query("SELECT posts.*,users.nickname FROM users INNER JOIN posts ON users.id=posts.userId ORDER BY id ASC;");
+    const result = await db.query("SELECT posts.*,users.nickname FROM users INNER JOIN posts ON users.id=posts.userId ORDER BY id DESC;");
     result.forEach(row => {
       posts.push(row);
     });

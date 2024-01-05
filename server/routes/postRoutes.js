@@ -17,16 +17,10 @@ postRouter.post('/user', (req, res) => {
 
 //login test
 postRouter.post('/login',
-    passport.authenticate('local',{failureMessage: true }),
+    passport.authenticate('local', { failureMessage: true }),
     function (req, res) {
         res.send("Success");
     });
-
-//Send login data for authentification
-// postRouter.post("/login", passport.authenticate('local', {
-//     successRedirect: "/post",
-//     failureRedirect: "/",
-// }));
 
 //Create new user in database
 postRouter.post("/register", async (req, res) => {
@@ -48,6 +42,28 @@ postRouter.post("/register", async (req, res) => {
     } catch (error) {
         res.send(error)
     }
+});
+
+//add new post to database
+postRouter.post("/add", async (req, res) => {
+    try {
+        await db.query("INSERT INTO posts(title, topic, color, userId, text) VALUES ($1,$2,$3,$4,$5);",
+            [req.body.title, req.body.topic, req.body.color, req.body.userid, req.body.text]);
+
+    } catch (error) {
+        console.log(error);
+    }
+    res.send("success");
+});
+
+//delete post from database
+postRouter.post("/delete", async (req, res) => {
+    try {
+        await db.query("DELETE FROM posts WHERE id=$1;", [req.body.id]);
+    } catch (error) {
+        console.log(error);
+    }
+    res.send("Success");
 });
 
 

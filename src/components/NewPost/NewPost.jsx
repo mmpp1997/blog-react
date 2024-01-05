@@ -1,12 +1,11 @@
 import { useState } from "react";
 import "./NewPost.css";
-import PostForm from "../PostForm/PostForm";
+import NewPostForm from "../NewPostForm/NewPostForm";
 
 function NewPost() {
     const [clickAdd,setClickedAdd]=useState(false);
 
     function addPost() {
-        console.log("clicked add post");
         setClickedAdd(true);
     }
     return (
@@ -16,7 +15,7 @@ function NewPost() {
                 <input className="add-btn" type="button" value="New Post" onClick={addPost} />
             </div>
             {/* add form */}
-            {clickAdd && <PostForm clicked={setClickedAdd}/>}
+            {clickAdd && <NewPostForm clicked={setClickedAdd}/>}
         </div>
     );
 }
