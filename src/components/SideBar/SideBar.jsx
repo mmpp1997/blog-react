@@ -4,24 +4,36 @@ import topics from '../../topics';
 import WeatherComponent from './WeatherComponent/WeatherComponent';
 
 function Sidebar(props) {
-    
+    const filters = [
+    { name: "All Posts", color: "transparent" },
+    { name: "My Posts", color: "transparent" },
+    { name: "Other Posts", color: "transparent" },
+    ...topics
+    ];
+
     function handleLogOut() {
-        console.log("loging out");
+        console.log("logout");
     }
 
     return (
         <div className="side-drawer" style={{ display: props.toggle ? "flex" : "none" }}>
             <div className="list">
-                <p className="topic-title">Select topic:</p>
+                <p className="topic-title">Select filter:</p>
                 <ul className="topic-list">
-                    {topics.map((topic) => {
+                    {filters.map((filter) => {
                         return (
-                            <li key={topic.name} className="topic-item" style={{ backgroundColor: topic.color }}>{topic.name}</li>
+                            <li key={filter.name}>
+                                <input className="topic-btn" type="button" value={filter.name} 
+                                onClick={(e) => {
+                                    props.filter(e.target.value);
+                                    props.close();
+                                    }} 
+                                style={{ 
+                                    backgroundColor: filter.color,
+                                    borderColor:filter.name === props.sort && "white"  }} />
+                            </li>
                         );
                     })}
-                    <li className="topic-item">----------------</li>
-                    <li className="topic-item">My posts</li>
-                    <li className="topic-item">Other posts</li>
                 </ul>
             </div>
             <WeatherComponent />

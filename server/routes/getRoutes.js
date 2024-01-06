@@ -8,9 +8,7 @@ import passport from "passport";
 const getRouter = express.Router();
 
 //Get login page
-getRouter.get("/posts", async (req, res) => {
-  res.send(await getPosts());
-});
+
 
 getRouter.get("/weather", async (req, res) => {
   res.send(await GetWeather("London"));

@@ -66,5 +66,31 @@ postRouter.post("/delete", async (req, res) => {
     res.send("Success");
 });
 
+//get filtered posts
+postRouter.post("/posts", async (req, res) => {
+    const topic = req.body.topic;
+    var data;
+    try {
+        if (topic == "All Posts") {
+            data = await getPosts();
+        }
+        else if (topic == "My Posts") {
+            const result = await db.query("SELECT posts.*,users.nickname FROM users INNER JOIN posts ON users.id=posts.userId WHERE userid=$1 ORDER BY id DESC;", [1]);
+            data = result;
+        }
+        else if (topic == "Other People") {
+            const result = await db.query("SELECT posts.*,users.nickname FROM users INNER JOIN posts ON users.id=posts.userId WHERE userid!=$1 ORDER BY id DESC;", [1]);
+            data = result;
+        }
+        else {
+            const result = await db.query("SELECT posts.*,users.nickname FROM users INNER JOIN posts ON users.id=posts.userId WHERE topic=$1 ORDER BY id DESC;", [topic]);
+            data = result;
+        }
+    } catch (error) {
+        console.log(error);
+    }
+    res.send(data);
+});
+
 
 export default postRouter;
