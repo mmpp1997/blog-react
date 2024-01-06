@@ -2,7 +2,7 @@ import "../Post.css";
 
 function SmallPost(props) {
     return (
-        <div>
+        <div className="small" onClick={props.clicked}>
             <input name="title" type="text" className="post-title" value={props.post.title} disabled={true} required />
             <div className="separator" style={{ backgroundColor: props.post.color }} />
             <div className="aditional-info">

@@ -1,0 +1,51 @@
+.side-drawer {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  overflow-x: hidden;
+  height: 100%;
+}
+.list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+.topic-list {
+  list-style-type: none;
+  padding: 0;
+}
+.topic-title {
+  font-size: 25px;
+  margin: 0px;
+  margin-top: 10px;
+  color: white;
+}
+.topic-item {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  margin-bottom: 10px;
+  padding: 5px 10px;
+  color: white;
+}
+.logout-btn-div {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.logout-btn {
+  background-color: red;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 15px;
+  font-size: 25px;
+  color: white;
+  margin: 10px 0px;
+}
+.logout-btn:hover {
+  color: grey;
+}

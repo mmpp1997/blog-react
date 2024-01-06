@@ -12,5 +12,9 @@ getRouter.get("/posts", async (req, res) => {
   res.send(await getPosts());
 });
 
+getRouter.get("/weather", async (req, res) => {
+  res.send(await GetWeather("London"));
+});
+
 
 export default getRouter;

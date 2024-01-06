@@ -6,10 +6,12 @@ import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
 import Post from "../Post/Post";
 import NewPost from "../NewPost/NewPost";
+import Sidebar from "../SideBar/SideBar";
 
 
 function Blog() {
   const [posts, setPosts] = useState([]);
+  const [sideBar, setSideBar] = useState(false);
 
   //update posts on reload
   useEffect(() => {
@@ -24,19 +26,28 @@ function Blog() {
     fetchPosts();
   }, []);
 
+  function toggleSideBar() {
+    setSideBar((prev) => { return !prev });
+  }
+
 
   return (
     <div className="grid-container">
       <div>
-        <Header />
+        <Header toggleBar={toggleSideBar} />
       </div>
-      <div className="page">
-        <NewPost/>
-        {posts.map((post) => {
-          return (
-            <Post key={post.id} post={post} />
-          );
-        })}
+      <div className="page-grid-test" style={{ gridTemplateColumns: sideBar ? "auto 250px" : "auto" }}>
+        <div className="page">
+          <NewPost />
+          {posts.map((post) => {
+            return (
+              <Post key={post.id} post={post} />
+            );
+          })}
+        </div>
+        <div className="sidebar-div" style={{ display: sideBar ? "inline" : "none" }}>
+          <Sidebar toggle={sideBar} />
+        </div>
       </div>
       <div>
         <Footer />

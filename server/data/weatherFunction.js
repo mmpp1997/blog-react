@@ -12,9 +12,9 @@ async function GetWeather(location) {
     const city = response.data.location.name;
     const temperature = response.data.current.temp_c;
     const forecast = response.data.current.condition.text;
-    const text = city + ": " + forecast + ", " + temperature + "°C";
+    const text =forecast + ", " + temperature + "°C";
     const image = response.data.current.condition.icon;
-    data = { text: text, image: image };
+    data = {city:city, text: text, image: image };
   } catch (error) {
     console.log(error);
   }
