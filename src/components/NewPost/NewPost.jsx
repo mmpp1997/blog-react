@@ -6,7 +6,7 @@ function NewPost() {
     const [clickAdd,setClickedAdd]=useState(false);
 
     function addPost() {
-        setClickedAdd(true);
+        setClickedAdd((prev)=>{return !prev});
     }
     return (
         <div className="add-div">
@@ -15,7 +15,7 @@ function NewPost() {
                 <input className="add-btn" type="button" value="New Post" onClick={addPost} />
             </div>
             {/* add form */}
-            {clickAdd && <NewPostForm clicked={setClickedAdd}/>}
+            {clickAdd && <NewPostForm clicked={addPost}/>}
         </div>
     );
 }

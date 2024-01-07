@@ -1,18 +1,16 @@
+import { useState } from 'react';
+import { Navigate } from "react-router-dom";
 
 import './SideBar.css';
-import topics from '../../topics';
+import {filters} from '../../topics';
 import WeatherComponent from './WeatherComponent/WeatherComponent';
 
 function Sidebar(props) {
-    const filters = [
-    { name: "All Posts", color: "transparent" },
-    { name: "My Posts", color: "transparent" },
-    { name: "Other Posts", color: "transparent" },
-    ...topics
-    ];
+    const [logOut, setlogOut] = useState(false);
+
 
     function handleLogOut() {
-        console.log("logout");
+        setlogOut(true);
     }
 
     return (
@@ -40,6 +38,7 @@ function Sidebar(props) {
             <div className="logout-btn-div">
                 <input className="logout-btn" type="button" value="Log out" onClick={handleLogOut} />
             </div>
+            {logOut && (<Navigate to="/" replace={true} />)}
         </div>
     );
 };

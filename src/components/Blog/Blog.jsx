@@ -9,14 +9,13 @@ import NewPost from "../NewPost/NewPost";
 import Sidebar from "../SideBar/SideBar";
 
 
-function Blog() {
+function Blog(props) {
   const [posts, setPosts] = useState([]);
   const [sideBar, setSideBar] = useState(false);
   const [sort, setSort] = useState("All Posts");
 
   //update posts on reload
   useEffect(() => {
-
     const fetchPosts = async () => {
       try {
         const response = await axios.post('http://localhost:3001/posts', {topic:sort}, {
@@ -30,6 +29,7 @@ function Blog() {
       }
     };
     fetchPosts();
+    console.log("Infinity");
   }, [sort]);
 
   function toggleSideBar() {

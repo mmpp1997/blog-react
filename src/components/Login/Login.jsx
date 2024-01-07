@@ -3,7 +3,7 @@ import { Navigate } from "react-router-dom";
 import axios from 'axios';
 import "./Login.css";
 
-function Login() {
+function Login(props) {
     const [regForm, setRegForm] = useState(false);
     const [action, setAction] = useState("Login");
     const [user, setUser] = useState({});
@@ -31,6 +31,7 @@ function Login() {
                     }
                     console.log(response.data);
                     if (response.data === "Success") {
+                        props.login(user);
                         setSuccess(true);
                     }
                 }
@@ -39,7 +40,7 @@ function Login() {
             }
         };
         fetchData();
-    }, [user,regForm]);
+    }, [user,regForm,props]);
 
 
 

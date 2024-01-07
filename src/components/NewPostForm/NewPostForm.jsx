@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "./NewPostForm.css";
-import topics from "../../topics"
+import {topics} from "../../topics"
 
 function NewPostForm(props) {
     const [newPost, setNewPost] = useState({});
@@ -15,14 +15,14 @@ function NewPostForm(props) {
                             'Content-Type': 'application/json',
                         },
                     });
-                    setNewPost({});
                 } catch (error) {
                     console.log(error);
                 }
             };
             addPost();
+            props.clicked();
         }
-    }, [newPost])
+    }, [newPost, props])
 
     function createNewPost(event) {
 
@@ -39,8 +39,6 @@ function NewPostForm(props) {
 
         }
         setNewPost(post);
-        event.target.reset();
-        window.location.reload();
     }
     return (
         <form name="newPost" className="new-post-space" onSubmit={createNewPost}>

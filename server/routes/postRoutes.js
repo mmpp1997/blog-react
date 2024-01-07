@@ -92,5 +92,17 @@ postRouter.post("/posts", async (req, res) => {
     res.send(data);
 });
 
+//edit post data
+postRouter.post("/edit", async (req, res) => {
+    const id = req.body.id;
+    try {
+        await db.query("UPDATE posts SET title = ($1), text = ($2), topic = ($3), color = ($4) WHERE id = ($5)",
+            [req.body.title, req.body.text, req.body.topic, req.body.color, id]);
+    } catch (error) {
+        console.log(error);
+    }
+    res.send("success");
+});
+
 
 export default postRouter;
