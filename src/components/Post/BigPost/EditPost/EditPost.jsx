@@ -1,10 +1,13 @@
 import axios from "axios";
-import "../../Post.css";
 import { useState, useEffect } from "react";
+import { useDispatch } from 'react-redux';
+import {change} from "../../../../store/store";
+import "../../Post.css";
 import {topics} from "../../../../topics";
 
 function EditPost(props) {
 
+    const dispatch = useDispatch();
     const [editedPost, setEditedPost] = useState({});
 
     useEffect(() => {
@@ -17,6 +20,7 @@ function EditPost(props) {
                             'Content-Type': 'application/json',
                         },
                     });
+                    dispatch(change());
 
                 } catch (error) {
                     console.log(error);
@@ -25,7 +29,7 @@ function EditPost(props) {
             editPost();
             props.toggle();
         }
-    }, [editedPost, props])
+    }, [editedPost, props,dispatch])
 
 
     async function handleEdit(event) {

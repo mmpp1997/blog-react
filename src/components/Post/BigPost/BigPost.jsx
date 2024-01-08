@@ -1,13 +1,17 @@
 import axios from "axios";
-import "../Post.css";
 import CloseIcon from '@mui/icons-material/Close';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useState } from "react";
+import { useDispatch } from 'react-redux';
+import {change} from "../../../store/store";
+
 import EditPost from "./EditPost/EditPost";
+import "../Post.css";
 
 function BigPost(props) {
 
+    const dispatch = useDispatch();
     const [editToggle, setEditToggle] = useState(false);
 
     //delete post function
@@ -18,6 +22,7 @@ function BigPost(props) {
                     'Content-Type': 'application/json',
                 },
             });
+            dispatch(change());
         } catch (error) {
             console.log(error);
         }

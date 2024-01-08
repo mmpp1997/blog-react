@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useSelector, useDispatch } from 'react-redux';
+import {change} from "../../store/store";
 
 import "./Blog.css";
 import Header from "../Header/Header";
@@ -9,16 +11,19 @@ import NewPost from "../NewPost/NewPost";
 import Sidebar from "../SideBar/SideBar";
 
 
-function Blog(props) {
+function Blog() {
+  const dispatch = useDispatch();
   const [posts, setPosts] = useState([]);
   const [sideBar, setSideBar] = useState(false);
   const [sort, setSort] = useState("All Posts");
+
+  const updateToggle = useSelector(state => state.toggle);
 
   //update posts on reload
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await axios.post('http://localhost:3001/posts', {topic:sort}, {
+        const response = await axios.post('http://localhost:3001/posts', { topic: sort }, {
           headers: {
             'Content-Type': 'application/json',
           },
@@ -29,8 +34,7 @@ function Blog(props) {
       }
     };
     fetchPosts();
-    console.log("Infinity");
-  }, [sort]);
+  }, [sort, updateToggle]);
 
   function toggleSideBar() {
     setSideBar((prev) => { return !prev });
@@ -38,6 +42,7 @@ function Blog(props) {
 
   function setFilter(value) {
     setSort(value);
+    dispatch(change());
   }
 
 

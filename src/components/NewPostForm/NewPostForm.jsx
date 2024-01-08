@@ -1,9 +1,14 @@
-import { useState, useEffect } from "react";
 import axios from "axios";
+import { useState, useEffect } from "react";
+import { useDispatch } from 'react-redux';
+import {change} from "../../store/store";
+
 import "./NewPostForm.css";
 import {topics} from "../../topics"
 
 function NewPostForm(props) {
+
+    const dispatch = useDispatch();
     const [newPost, setNewPost] = useState({});
 
     useEffect(() => {
@@ -15,6 +20,7 @@ function NewPostForm(props) {
                             'Content-Type': 'application/json',
                         },
                     });
+                    dispatch(change());
                 } catch (error) {
                     console.log(error);
                 }
@@ -22,7 +28,7 @@ function NewPostForm(props) {
             addPost();
             props.clicked();
         }
-    }, [newPost, props])
+    }, [newPost, props, dispatch])
 
     function createNewPost(event) {
 
