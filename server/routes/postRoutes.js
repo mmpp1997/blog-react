@@ -1,10 +1,11 @@
+import 'dotenv/config';
 import express from "express";
 import bcrypt from "bcrypt";
-import { GetWeather } from "../data/weatherFunction.js";
 import db from "../database/database.js";
 import { getPosts } from "../data/dataFunctions.js";
-import topics from "../data/topics.js";
 import passport from "passport";
+import { generateToken } from "../index.js";
+import jwt from "jsonwebtoken";
 
 const postRouter = express.Router();
 const saltRounds = 10;
@@ -15,12 +16,33 @@ postRouter.post('/user', (req, res) => {
     res.send(user);
 });
 
-//login test
-postRouter.post('/login',
-    passport.authenticate('local', { failureMessage: true }),
-    function (req, res) {
-        res.send("Success");
+
+// JWT token verify
+const authenticateToken = (req, res, next) => {
+    const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
+  
+    if (!token) {
+      return res.sendStatus(401); // Unauthorized
+    }
+  
+    jwt.verify(token, process.env.SECRET, (err, user) => {
+      if (err) {
+        return res.sendStatus(403); // Forbidden
+      }
+  
+      req.user = user;
+      next();
     });
+};
+
+
+
+postRouter.post('/login', passport.authenticate('local'), (req, res) => {
+    // If authentication is successful, generate and send a JWT token
+    const token = generateToken(req.user);
+    res.json({ message: "Success", token: token });
+});
+
 
 //Create new user in database
 postRouter.post("/register", async (req, res) => {
@@ -33,7 +55,8 @@ postRouter.post("/register", async (req, res) => {
                     res.send(err);
                 } else {
                     passport.authenticate("local")(req, res, function () {
-                        res.send("Success");
+                        const token = generateToken(req.user);
+                        res.json({ message: "Success", token: token });
                     });
                 }
             });
@@ -67,7 +90,7 @@ postRouter.post("/delete", async (req, res) => {
 });
 
 //get filtered posts
-postRouter.post("/posts", async (req, res) => {
+postRouter.post("/posts",authenticateToken, async (req, res) => {
     const topic = req.body.topic;
     var data;
     try {
@@ -89,7 +112,7 @@ postRouter.post("/posts", async (req, res) => {
     } catch (error) {
         console.log(error);
     }
-    res.send(data);
+    res.json({ data: data, user: req.user });
 });
 
 //edit post data

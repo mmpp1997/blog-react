@@ -29,9 +29,9 @@ function Login(props) {
                             },
                         });
                     }
-                    console.log(response.data);
-                    if (response.data === "Success") {
-                        props.login(user);
+                    if (response.data.message === "Success") {
+                        const token = response.data.token;
+                        localStorage.setItem('token', token);
                         setSuccess(true);
                     }
                 }

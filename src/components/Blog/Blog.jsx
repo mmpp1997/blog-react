@@ -21,14 +21,18 @@ function Blog() {
 
   //update posts on reload
   useEffect(() => {
+    const token = localStorage.getItem('token');
     const fetchPosts = async () => {
       try {
         const response = await axios.post('http://localhost:3001/posts', { topic: sort }, {
           headers: {
+            Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',
           },
         });
-        setPosts(response.data);
+        //need to change to be able to show user in multiple components
+        console.log(response.data.user);
+        setPosts(response.data.data);
       } catch (error) {
         console.log(error);
       }
