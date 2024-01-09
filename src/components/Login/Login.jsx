@@ -4,13 +4,12 @@ import axios from 'axios';
 import "./Login.css";
 
 function Login(props) {
+    const [login, setlogin] = useState(false);
     const [regForm, setRegForm] = useState(false);
     const [action, setAction] = useState("Login");
     const [user, setUser] = useState({});
-    const [success, setSuccess] = useState(false);
 
     useEffect(() => {
-        setSuccess(false);
         const fetchData = async () => {
             try {
                 if (Object.keys(user).length > 0) {
@@ -32,7 +31,7 @@ function Login(props) {
                     if (response.data.message === "Success") {
                         const token = response.data.token;
                         localStorage.setItem('token', token);
-                        setSuccess(true);
+                        setlogin(true);
                     }
                 }
             } catch (error) {
@@ -92,7 +91,7 @@ function Login(props) {
                     </div>
                 </div>
             </form>
-            {success && (<Navigate to="/blog" replace={true} />)}
+            {login && (<Navigate to="/blog" replace={true} />)}
         </div>
     );
 }

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from 'react-redux';
-import {change} from "../../store/store";
+import {change, setCurrentUser} from "../../store/store";
 
 import "./Blog.css";
 import Header from "../Header/Header";
@@ -12,11 +12,11 @@ import Sidebar from "../SideBar/SideBar";
 
 
 function Blog() {
+  
   const dispatch = useDispatch();
   const [posts, setPosts] = useState([]);
   const [sideBar, setSideBar] = useState(false);
   const [sort, setSort] = useState("All Posts");
-
   const updateToggle = useSelector(state => state.toggle);
 
   //update posts on reload
@@ -31,14 +31,16 @@ function Blog() {
           },
         });
         //need to change to be able to show user in multiple components
-        console.log(response.data.user);
+        const user = response.data.user;
+        localStorage.setItem('user', JSON.stringify(user));
+        dispatch(setCurrentUser(user));
         setPosts(response.data.data);
       } catch (error) {
         console.log(error);
       }
     };
     fetchPosts();
-  }, [sort, updateToggle]);
+  }, [sort, updateToggle, dispatch]);
 
   function toggleSideBar() {
     setSideBar((prev) => { return !prev });
@@ -66,7 +68,8 @@ function Blog() {
           })}
         </div>
         <div className="sidebar-div" style={{ display: sideBar ? "inline" : "none" }}>
-          <Sidebar toggle={sideBar} filter={setFilter} sort={sort} close={toggleSideBar} />
+          {sideBar && <Sidebar filter={setFilter} sort={sort} close={toggleSideBar} />}
+          
         </div>
       </div>
       <div>

@@ -6,6 +6,7 @@ import { getPosts } from "../data/dataFunctions.js";
 import passport from "passport";
 import { generateToken } from "../index.js";
 import jwt from "jsonwebtoken";
+import { GetWeather } from '../data/weatherFunction.js';
 
 const postRouter = express.Router();
 const saltRounds = 10;
@@ -20,18 +21,18 @@ postRouter.post('/user', (req, res) => {
 // JWT token verify
 const authenticateToken = (req, res, next) => {
     const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
-  
+
     if (!token) {
-      return res.sendStatus(401); // Unauthorized
+        return res.sendStatus(401); // Unauthorized
     }
-  
+
     jwt.verify(token, process.env.SECRET, (err, user) => {
-      if (err) {
-        return res.sendStatus(403); // Forbidden
-      }
-  
-      req.user = user;
-      next();
+        if (err) {
+            return res.sendStatus(403); // Forbidden
+        }
+
+        req.user = user;
+        next();
     });
 };
 
@@ -40,7 +41,7 @@ const authenticateToken = (req, res, next) => {
 postRouter.post('/login', passport.authenticate('local'), (req, res) => {
     // If authentication is successful, generate and send a JWT token
     const token = generateToken(req.user);
-    res.json({ message: "Success", token: token });
+    res.json({ message: "Success", token: token});
 });
 
 
@@ -90,7 +91,7 @@ postRouter.post("/delete", async (req, res) => {
 });
 
 //get filtered posts
-postRouter.post("/posts",authenticateToken, async (req, res) => {
+postRouter.post("/posts", authenticateToken, async (req, res) => {
     const topic = req.body.topic;
     var data;
     try {
@@ -125,6 +126,17 @@ postRouter.post("/edit", async (req, res) => {
         console.log(error);
     }
     res.send("success");
+});
+
+//weather data
+postRouter.post("/weather", authenticateToken, async (req, res) => {
+    const location = req.body.location;
+    res.send(await GetWeather(location));
+});
+
+//logout route
+postRouter.post('/logout', authenticateToken, function (req, res) {
+    res.json("Success");
 });
 
 

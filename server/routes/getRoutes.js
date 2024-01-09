@@ -8,9 +8,7 @@ import passport from "passport";
 const getRouter = express.Router();
 
 //Get weather info
-getRouter.get("/weather", async (req, res) => {
-  res.send(await GetWeather("London"));
-});
+
 
 //logout
 getRouter.get('/logout', function (req, res, next) {

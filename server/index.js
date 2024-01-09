@@ -53,7 +53,7 @@ passport.deserializeUser((id, done) => {
 });
 
 const generateToken = (user) => {
-    return jwt.sign({ id: user.id, nickname:user.nickname }, jwtSecretKey, { expiresIn: '1h' });
+    return jwt.sign({ id: user.id, nickname:user.nickname, location:user.location}, jwtSecretKey, { expiresIn: '1h' });
 };
 export {generateToken};
 

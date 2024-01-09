@@ -45,6 +45,20 @@
   align-items: center;
   justify-content: center;
 }
+.user-div{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-bottom: 1px solid white;
+}
+.current-user{
+  color: white;
+  font-size: 20px;
+}
+.user{
+  font-size: 22px;
+  color: yellow;
+}
 .logout-btn {
   background-color: red;
   padding: 10px 20px;
