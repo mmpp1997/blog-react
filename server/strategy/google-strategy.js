@@ -5,7 +5,7 @@ import db from "../database/database.js";
 const google = new GoogleStrategy({
     clientID: process.env.CLIENT_ID,
     clientSecret: process.env.CLIENT_SECRET,
-    callbackURL: "http://localhost:3000/auth/google/blog",
+    callbackURL: "http://localhost:3001/auth/google/blog",
     userProfileURL: "https://www.googleapis.com/oauth2/v3/userinfo",
     passReqToCallback: true
 },

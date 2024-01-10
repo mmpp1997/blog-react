@@ -16,7 +16,7 @@ import { fileURLToPath } from 'url';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const jwtSecretKey=process.env.SECRET;
+const jwtSecretKey = process.env.SECRET;
 
 const port = 3001;
 const app = express();
@@ -53,9 +53,9 @@ passport.deserializeUser((id, done) => {
 });
 
 const generateToken = (user) => {
-    return jwt.sign({ id: user.id, nickname:user.nickname, location:user.location}, jwtSecretKey, { expiresIn: '1h' });
+    return jwt.sign({ id: user.id, nickname: user.nickname, location: user.location }, jwtSecretKey, { expiresIn: '1h' });
 };
-export {generateToken};
+export { generateToken };
 
 
 app.use("/", getRouter);
@@ -64,6 +64,18 @@ app.use("/", postRouter);
 // app.get('*', (req, res) => {
 //     res.sendFile(path.join(__dirname + '/public/index.html'));
 // });
+
+//Google login
+getRouter.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
+
+getRouter.get('/auth/google/blog', passport.authenticate('google'), (req, res) => {
+    // If authentication is successful, generate and send a JWT token
+    console.log("response " + req.user.id);
+    const token = generateToken(req.user);
+    res.json({ message: "Success", token: token });
+}
+);
+
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);
