@@ -9,6 +9,7 @@ function EditPost(props) {
 
     const dispatch = useDispatch();
     const [editedPost, setEditedPost] = useState({});
+    const token = localStorage.getItem('token');
 
     useEffect(() => {
         if (Object.keys(editedPost).length > 0) {
@@ -17,6 +18,7 @@ function EditPost(props) {
 
                     await axios.post('http://localhost:3001/edit', editedPost, {
                         headers: {
+                            Authorization: `Bearer ${token}`,
                             'Content-Type': 'application/json',
                         },
                     });
@@ -29,7 +31,7 @@ function EditPost(props) {
             editPost();
             props.toggle();
         }
-    }, [editedPost, props,dispatch])
+    }, [editedPost, props, dispatch, token])
 
 
     async function handleEdit(event) {
@@ -41,6 +43,7 @@ function EditPost(props) {
             text: event.target.text.value,
             topic: topic.name,
             color: topic.color,
+            userid: props.post.userid
         };
         setEditedPost(editedPost);
     }

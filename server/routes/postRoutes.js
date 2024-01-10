@@ -11,13 +11,6 @@ import { GetWeather } from '../data/weatherFunction.js';
 const postRouter = express.Router();
 const saltRounds = 10;
 
-//test post method
-postRouter.post('/user', (req, res) => {
-    const user = req.body;
-    res.send(user);
-});
-
-
 // JWT token verify
 const authenticateToken = (req, res, next) => {
     const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
@@ -36,14 +29,11 @@ const authenticateToken = (req, res, next) => {
     });
 };
 
-
-
 postRouter.post('/login', passport.authenticate('local'), (req, res) => {
     // If authentication is successful, generate and send a JWT token
     const token = generateToken(req.user);
-    res.json({ message: "Success", token: token});
+    res.json({ message: "Success", token: token });
 });
-
 
 //Create new user in database
 postRouter.post("/register", async (req, res) => {
@@ -68,30 +58,9 @@ postRouter.post("/register", async (req, res) => {
     }
 });
 
-//add new post to database
-postRouter.post("/add", async (req, res) => {
-    try {
-        await db.query("INSERT INTO posts(title, topic, color, userId, text) VALUES ($1,$2,$3,$4,$5);",
-            [req.body.title, req.body.topic, req.body.color, req.body.userid, req.body.text]);
-
-    } catch (error) {
-        console.log(error);
-    }
-    res.send("success");
-});
-
-//delete post from database
-postRouter.post("/delete", async (req, res) => {
-    try {
-        await db.query("DELETE FROM posts WHERE id=$1;", [req.body.id]);
-    } catch (error) {
-        console.log(error);
-    }
-    res.send("Success");
-});
-
 //get filtered posts
 postRouter.post("/posts", authenticateToken, async (req, res) => {
+    const userId = Number(req.user.id);
     const topic = req.body.topic;
     var data;
     try {
@@ -99,11 +68,11 @@ postRouter.post("/posts", authenticateToken, async (req, res) => {
             data = await getPosts();
         }
         else if (topic == "My Posts") {
-            const result = await db.query("SELECT posts.*,users.nickname FROM users INNER JOIN posts ON users.id=posts.userId WHERE userid=$1 ORDER BY id DESC;", [1]);
+            const result = await db.query("SELECT posts.*,users.nickname FROM users INNER JOIN posts ON users.id=posts.userId WHERE userid=$1 ORDER BY id DESC;", [userId]);
             data = result;
         }
-        else if (topic == "Other People") {
-            const result = await db.query("SELECT posts.*,users.nickname FROM users INNER JOIN posts ON users.id=posts.userId WHERE userid!=$1 ORDER BY id DESC;", [1]);
+        else if (topic == "Other Posts") {
+            const result = await db.query("SELECT posts.*,users.nickname FROM users INNER JOIN posts ON users.id=posts.userId WHERE userid!=$1 ORDER BY id DESC;", [userId]);
             data = result;
         }
         else {
@@ -116,16 +85,43 @@ postRouter.post("/posts", authenticateToken, async (req, res) => {
     res.json({ data: data, user: req.user });
 });
 
-//edit post data
-postRouter.post("/edit", async (req, res) => {
-    const id = req.body.id;
+//add new post to database
+postRouter.post("/add", authenticateToken, async (req, res) => {
     try {
-        await db.query("UPDATE posts SET title = ($1), text = ($2), topic = ($3), color = ($4) WHERE id = ($5)",
-            [req.body.title, req.body.text, req.body.topic, req.body.color, id]);
+        if (req.user.id == req.body.userid) {
+            await db.query("INSERT INTO posts(title, topic, color, userId, text) VALUES ($1,$2,$3,$4,$5);",
+                [req.body.title, req.body.topic, req.body.color, req.body.userid, req.body.text]);
+        }
     } catch (error) {
         console.log(error);
     }
     res.send("success");
+});
+
+//edit post data
+postRouter.post("/edit",authenticateToken, async (req, res) => {
+    const id = req.body.id;
+    try {
+        if (req.user.id == req.body.userid) {
+        await db.query("UPDATE posts SET title = ($1), text = ($2), topic = ($3), color = ($4) WHERE id = ($5)",
+            [req.body.title, req.body.text, req.body.topic, req.body.color, id]);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+    res.send("success");
+});
+
+//delete post from database
+postRouter.post("/delete", authenticateToken, async (req, res) => {
+    try {
+        if (req.user.id == req.body.userid) {
+            await db.query("DELETE FROM posts WHERE id=$1;", [req.body.id]);
+        }
+    } catch (error) {
+        console.log(error);
+    }
+    res.send("Success");
 });
 
 //weather data

@@ -32,7 +32,6 @@ function Blog() {
         });
         //need to change to be able to show user in multiple components
         const user = response.data.user;
-        localStorage.setItem('user', JSON.stringify(user));
         dispatch(setCurrentUser(user));
         setPosts(response.data.data);
       } catch (error) {

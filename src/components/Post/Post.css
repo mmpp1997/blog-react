@@ -57,6 +57,10 @@ textarea{
     align-items: center;
 
 }
+.hidden-btns{
+    display: flex;
+    align-items: center;
+}
 .post-btn{
     border: none;
     border-radius: 10px;

@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
-import { useDispatch } from 'react-redux';
+import { useDispatch,useSelector } from 'react-redux';
 import {change} from "../../store/store";
 
 import "./NewPostForm.css";
@@ -10,6 +10,8 @@ function NewPostForm(props) {
 
     const dispatch = useDispatch();
     const [newPost, setNewPost] = useState({});
+    const currentUser = useSelector(state => state.currentUser);
+    const token = localStorage.getItem('token');
 
     useEffect(() => {
         if (Object.keys(newPost).length > 0) {
@@ -17,6 +19,7 @@ function NewPostForm(props) {
                 try {
                     await axios.post('http://localhost:3001/add', newPost, {
                         headers: {
+                            Authorization: `Bearer ${token}`,
                             'Content-Type': 'application/json',
                         },
                     });
@@ -28,7 +31,7 @@ function NewPostForm(props) {
             addPost();
             props.clicked();
         }
-    }, [newPost, props, dispatch])
+    }, [newPost, props, dispatch,token])
 
     function createNewPost(event) {
 
@@ -40,7 +43,7 @@ function NewPostForm(props) {
             title: event.target.title.value,
             topic: event.target.topic.value,
             color: topic.color,
-            userid: 1,
+            userid: currentUser.id,
             text: event.target.text.value,
 
         }
