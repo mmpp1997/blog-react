@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Cookies from "js-cookie";
 import { useSelector, useDispatch } from 'react-redux';
 import {change, setCurrentUser} from "../../store/store";
 
@@ -9,6 +10,7 @@ import Footer from "../Footer/Footer";
 import Post from "../Post/Post";
 import NewPost from "../NewPost/NewPost";
 import Sidebar from "../SideBar/SideBar";
+import { server } from "../../App";
 
 
 function Blog() {
@@ -21,12 +23,17 @@ function Blog() {
 
   //update posts on reload
   useEffect(() => {
-    const token = localStorage.getItem('token');
+
+    var token = localStorage.getItem('token');
+    const tokenCookie = Cookies.get('token');
+    if(!token && tokenCookie){
+      localStorage.setItem('token',tokenCookie);
+      token = tokenCookie;
+    }
+    
     const fetchPosts = async () => {
-      const tokenCookie = document.cookie.split(';').find(cookie => cookie.trim().startsWith('token='));
-      console.log(tokenCookie);
       try {
-        const response = await axios.post('http://localhost:3001/posts', { topic: sort }, {
+        const response = await axios.post(server+"/posts", { topic: sort }, {
           headers: {
             Authorization: `Bearer ${token}`,
             'Content-Type': 'application/json',

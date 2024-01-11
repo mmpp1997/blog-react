@@ -5,6 +5,7 @@ import {change} from "../../store/store";
 
 import "./NewPostForm.css";
 import {topics} from "../../topics"
+import { server } from "../../App";
 
 function NewPostForm(props) {
 
@@ -17,7 +18,7 @@ function NewPostForm(props) {
         if (Object.keys(newPost).length > 0) {
             const addPost = async () => {
                 try {
-                    await axios.post('http://localhost:3001/add', newPost, {
+                    await axios.post(server+"/add", newPost, {
                         headers: {
                             Authorization: `Bearer ${token}`,
                             'Content-Type': 'application/json',

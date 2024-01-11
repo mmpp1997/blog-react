@@ -6,6 +6,7 @@ import { filters } from '../../topics';
 import WeatherComponent from './WeatherComponent/WeatherComponent';
 import {setCurrentUser} from "../../store/store";
 import { useState } from 'react';
+import { server } from '../../App';
 
 function Sidebar(props) {
     const dispatch = useDispatch();
@@ -15,7 +16,7 @@ function Sidebar(props) {
     async function handleLogOut() {
         const token = localStorage.getItem('token');
         try {
-            const response = await axios.post('http://localhost:3001/logout', {}, {
+            const response = await axios.post(server+"/logout", {}, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     'Content-Type': 'application/json',
@@ -57,7 +58,8 @@ function Sidebar(props) {
             </div>
             {!logOut && <WeatherComponent location={currentUser.location} />}
             <div className="user-div">
-                <p className="current-user">Logged in as <span className="user">{currentUser.nickname}</span></p>
+                <p className="current-user">Logged in as:</p>
+                <p className="user">{currentUser.nickname}</p>
             </div>
             <div className="logout-btn-div">
                 <input className="logout-btn" type="button" value="Log out" onClick={handleLogOut} />

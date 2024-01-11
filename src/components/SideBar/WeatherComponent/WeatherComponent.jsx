@@ -1,6 +1,7 @@
 import './WeatherComponent.css';
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { server } from '../../../App';
 
 function WeatherComponent(props) {
 
@@ -8,10 +9,9 @@ function WeatherComponent(props) {
     
     useEffect(() => {
         const token = localStorage.getItem('token');
-        console.log("try");
         const fetchWeather = async () => {
             try {
-                const response = await axios.post('http://localhost:3001/weather', { location: props.location }, {
+                const response = await axios.post(server+"/weather", { location: props.location }, {
                     headers: {
                         Authorization: `Bearer ${token}`,
                         'Content-Type': 'application/json',

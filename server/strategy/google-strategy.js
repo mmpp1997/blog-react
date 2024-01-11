@@ -17,19 +17,20 @@ const google = new GoogleStrategy({
                 user = {
                     id: parseInt(currentuser[0].id),
                     username: parseInt(currentuser[0].username),
-                    nickname: currentuser[0].nickname
+                    nickname: currentuser[0].nickname,
+                    location: currentuser[0].location
                 };
 
             } else {
-                const newUser = await db.query("INSERT INTO users(username, nickname, location) VALUES ($1,$2,$3) RETURNING id, username, nickname;",
+                const newUser = await db.query("INSERT INTO users(username, nickname, location) VALUES ($1,$2,$3) RETURNING id, username, nickname,location;",
                 [profile.id, profile.displayName, "London"]);
                 user = {
                     id: newUser[0].id,
                     username: newUser[0].username,
-                    nickname: newUser[0].nickname
+                    nickname: newUser[0].nickname,
+                    location: newUser[0].location
                 };
             };
-            //console.log(user);
             done(null, user);
         } catch (error) {
             done(error, false, error.message)

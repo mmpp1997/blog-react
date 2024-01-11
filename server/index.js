@@ -57,19 +57,8 @@ const generateToken = (user) => {
 };
 export { generateToken };
 
-
 app.use("/", getRouter);
 app.use("/", postRouter);
-
-//Google login
-app.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
-
-app.get('/auth/google/blog', passport.authenticate('google'), (req, res) => {
-    // If authentication is successful, generate and send a JWT token
-    const token = generateToken(req.user);
-    res.cookie("token", token);
-    res.redirect("http://localhost:3000/blog");
-});
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);

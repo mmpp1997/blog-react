@@ -8,6 +8,7 @@ import { change } from "../../../store/store";
 
 import EditPost from "./EditPost/EditPost";
 import "../Post.css";
+import { server } from "../../../App";
 
 function BigPost(props) {
 
@@ -19,7 +20,7 @@ function BigPost(props) {
     //delete post function
     async function deletePost(id, userid) {
         try {
-            await axios.post('http://localhost:3001/delete', { id: id, userid: userid}, {
+            await axios.post(server+"/delete", { id: id, userid: userid}, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     'Content-Type': 'application/json',

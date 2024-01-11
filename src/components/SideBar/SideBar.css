@@ -47,15 +47,19 @@
 }
 .user-div{
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   border-bottom: 1px solid white;
 }
 .current-user{
+  margin: 10px 0px;
   color: white;
   font-size: 20px;
 }
 .user{
+  margin: 0px;
+  margin-bottom: 10px;
   font-size: 22px;
   color: yellow;
 }

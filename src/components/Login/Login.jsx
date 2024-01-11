@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Navigate } from "react-router-dom";
 import axios from 'axios';
 import "./Login.css";
+import {server} from "../../App"
 
 function Login(props) {
     const [login, setlogin] = useState(false);
@@ -15,14 +16,14 @@ function Login(props) {
                 if (Object.keys(user).length > 0) {
                     var response;
                     if (regForm) {
-                        response = await axios.post('http://localhost:3001/register', user, {
+                        response = await axios.post(server+"register", user, {
                             headers: {
                                 'Content-Type': 'application/json',
                             },
                         });
                     }
                     else if (!regForm) {
-                        response = await axios.post('http://localhost:3001/login', user, {
+                        response = await axios.post(server+"/login", user, {
                             headers: {
                                 'Content-Type': 'application/json',
                             },
@@ -68,7 +69,7 @@ function Login(props) {
     }
 
     const google = () => {
-        window.open("http://localhost:3001/auth/google");
+        window.open("http://localhost:3001/auth/google", "_self");
     };
     
     return (
@@ -93,7 +94,6 @@ function Login(props) {
                     <div>
                         <input className="btn" type="submit" value={action} />
                         <input className="btn google" type="button" onClick={google} value={action + " with Google"} />
-                        <a className="btn google" href="http://localhost:3001/auth/google">Login with Google</a>
                     </div>
                 </div>
             </form>

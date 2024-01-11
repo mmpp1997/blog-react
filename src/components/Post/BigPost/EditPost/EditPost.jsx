@@ -4,6 +4,7 @@ import { useDispatch } from 'react-redux';
 import {change} from "../../../../store/store";
 import "../../Post.css";
 import {topics} from "../../../../topics";
+import { server } from "../../../../App";
 
 function EditPost(props) {
 
@@ -16,7 +17,7 @@ function EditPost(props) {
             const editPost = async () => {
                 try {
 
-                    await axios.post('http://localhost:3001/edit', editedPost, {
+                    await axios.post(server+"/edit", editedPost, {
                         headers: {
                             Authorization: `Bearer ${token}`,
                             'Content-Type': 'application/json',
