@@ -67,16 +67,9 @@ function Login(props) {
         event.target.reset();
     }
 
-    const handleGoogleLogin = async () => {
-        try {
-          // Make a request to the server to initiate Google authentication
-          const response = await axios.get('auth/google');
-          // Log the response from the server (optional)
-          console.log('Server Response:', response.data);
-        } catch (error) {
-          console.error('Error during Google authentication:', error);
-        }
-      };
+    const google = () => {
+        window.open("http://localhost:3001/auth/google");
+    };
     
     return (
         <div className="main">
@@ -99,7 +92,7 @@ function Login(props) {
                     </div>
                     <div>
                         <input className="btn" type="submit" value={action} />
-                        <input className="btn google" type="button" onClick={handleGoogleLogin} value={action + " with Google"} />
+                        <input className="btn google" type="button" onClick={google} value={action + " with Google"} />
                         <a className="btn google" href="http://localhost:3001/auth/google">Login with Google</a>
                     </div>
                 </div>

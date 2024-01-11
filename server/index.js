@@ -34,7 +34,7 @@ app.use(cors({
 app.use(session({
     secret: process.env.SECRET,
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
 }));
 
 app.use(passport.initialize());
@@ -61,21 +61,15 @@ export { generateToken };
 app.use("/", getRouter);
 app.use("/", postRouter);
 
-// app.get('*', (req, res) => {
-//     res.sendFile(path.join(__dirname + '/public/index.html'));
-// });
-
 //Google login
-getRouter.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
+app.get('/auth/google', passport.authenticate('google', { scope: ['profile'] }));
 
-getRouter.get('/auth/google/blog', passport.authenticate('google'), (req, res) => {
+app.get('/auth/google/blog', passport.authenticate('google'), (req, res) => {
     // If authentication is successful, generate and send a JWT token
-    console.log("response " + req.user.id);
     const token = generateToken(req.user);
-    res.json({ message: "Success", token: token });
-}
-);
-
+    res.cookie("token", token);
+    res.redirect("http://localhost:3000/blog");
+});
 
 app.listen(port, () => {
     console.log(`Server running on port ${port}`);

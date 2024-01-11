@@ -23,6 +23,8 @@ function Blog() {
   useEffect(() => {
     const token = localStorage.getItem('token');
     const fetchPosts = async () => {
+      const tokenCookie = document.cookie.split(';').find(cookie => cookie.trim().startsWith('token='));
+      console.log(tokenCookie);
       try {
         const response = await axios.post('http://localhost:3001/posts', { topic: sort }, {
           headers: {

@@ -29,7 +29,7 @@ const google = new GoogleStrategy({
                     nickname: newUser[0].nickname
                 };
             };
-            console.log(user);
+            //console.log(user);
             done(null, user);
         } catch (error) {
             done(error, false, error.message)
