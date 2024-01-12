@@ -4,7 +4,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import { change } from "../../../store/store";
+import { change,changeAlert } from "../../../store/store";
 
 import EditPost from "./EditPost/EditPost";
 import "../Post.css";
@@ -26,6 +26,7 @@ function BigPost(props) {
                     'Content-Type': 'application/json',
                 },
             });
+            dispatch(changeAlert(true));
             dispatch(change());
         } catch (error) {
             console.log(error);

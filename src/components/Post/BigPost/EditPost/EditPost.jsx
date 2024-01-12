@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
-import {change} from "../../../../store/store";
+import {change,changeAlert} from "../../../../store/store";
 import "../../Post.css";
 import {topics} from "../../../../topics";
 import { server } from "../../../../App";
@@ -23,6 +23,7 @@ function EditPost(props) {
                             'Content-Type': 'application/json',
                         },
                     });
+                    dispatch(changeAlert(true));
                     dispatch(change());
 
                 } catch (error) {

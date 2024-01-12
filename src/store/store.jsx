@@ -5,6 +5,7 @@ const toggleUpdateSlice = createSlice({
     initialState: {
         loggedIn:false,
         toggle: false,
+        toggleAlert: false,
         currentUser:{}
     },
     reducers: {
@@ -14,6 +15,9 @@ const toggleUpdateSlice = createSlice({
         change: state => {
             state.toggle = !state.toggle;
         },
+        changeAlert: (state, action) => {
+            state.toggleAlert = action.payload;
+        },
         setCurrentUser: (state, action) => {
             state.currentUser = action.payload;
         }
@@ -21,7 +25,7 @@ const toggleUpdateSlice = createSlice({
     }
 })
 
-export const {setLoggedIn, change, setCurrentUser} = toggleUpdateSlice.actions
+export const {setLoggedIn, change,changeAlert, setCurrentUser} = toggleUpdateSlice.actions
 
 const store = configureStore({
   reducer: toggleUpdateSlice.reducer

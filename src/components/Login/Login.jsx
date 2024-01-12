@@ -9,6 +9,7 @@ function Login(props) {
     const [regForm, setRegForm] = useState(false);
     const [action, setAction] = useState("Login");
     const [user, setUser] = useState({});
+    const [error, setError]=useState("");
 
     useEffect(() => {
         const fetchData = async () => {
@@ -16,7 +17,7 @@ function Login(props) {
                 if (Object.keys(user).length > 0) {
                     var response;
                     if (regForm) {
-                        response = await axios.post(server+"register", user, {
+                        response = await axios.post(server+"/register", user, {
                             headers: {
                                 'Content-Type': 'application/json',
                             },
@@ -32,7 +33,11 @@ function Login(props) {
                     if (response.data.message === "Success") {
                         const token = response.data.token;
                         localStorage.setItem('token', token);
+                        setError("");
                         setlogin(true);
+                    }
+                    else if(response.data.message !== ""){
+                        setError(response.data.message);
                     }
                 }
             } catch (error) {
@@ -87,6 +92,9 @@ function Login(props) {
                     </div>
                     <div style={{ display: regForm ? "inline" : "none" }}>
                         <input name="location" className="input" type="text" title="Enter your hometown" placeholder="Hometown" required={regForm} />
+                    </div>
+                    <div>
+                        <p className="error">{error}</p>
                     </div>
                     <div>
                         <p className="prompt">{regForm ? "Already" : "Not"} a user? <input onClick={handleReg} type="button" value={regForm ? "Login" : "Register"} /></p>

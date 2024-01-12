@@ -8,7 +8,7 @@ const strategy = new LocalStrategy(
         db.oneOrNone('SELECT * FROM users WHERE username = $1;', [username])
             .then(user => {
                 if (!user) {
-                    return done(null, false, { message: 'Incorrect username.' });
+                    return done(null, false, { message: 'Incorrect username' });
                 }
 
                 // Compare hashed password
@@ -17,7 +17,7 @@ const strategy = new LocalStrategy(
                         return done(err);
                     }
                     if (!result) {
-                        return done(null, false, { message: 'Incorrect password.' });
+                        return done(null, false, { message: 'Incorrect password' });
                     }
 
                     // Successful login

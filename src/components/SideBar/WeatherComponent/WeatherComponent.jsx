@@ -19,7 +19,7 @@ function WeatherComponent(props) {
                 });
                 setWeather(response.data);
             } catch (error) {
-                console.log(error);
+                console.log("Loš zahtjev");
             }
         };
         fetchWeather();
